@@ -1,0 +1,62 @@
+# Bootstrap in Go
+
+We will evaluate the usage of Go for modern statistics, using R as a benchmark. The questions we are trying to answer are as below:
+
+- The consultancy is looking for an independent data scientist to evaluate the possibilities of Go for the firm. How easy is it to use Go in place of R? 
+- How much money will the firm save in cloud computing costs?
+
+
+## Installation
+
+Clone the repository. In the terminal of the project directory, run 'go run main.go' This will prompt you to enter the number of bootstraps. The number of boostraps is currently limited to < 300, but you can change this by changing line 148 to a new a limit you wish.
+
+
+## Findings
+
+Bootstrap Runtime
+
+B = 10
+R: Time difference of 0.4996219 secs
+Go: Time difference of 1.13027s
+
+B = 50
+Time difference of 2.160004 secs
+Go: Time difference of 1.015485s
+
+B = 100
+R: Time difference of 4.426046 secs
+Go: Time difference of 1.38775075s
+
+B = 300
+R: Time difference of 13.06817 secs
+Go: Time difference of 2.356888042s
+
+
+B = 500
+R: Time difference of 21.57588 secs
+Go: Time difference of 2.612893667s
+
+
+B = 1000
+R: Time difference of 45.19981 secs
+Go: Time difference of 4.5603375s
+
+We see that for that a small number of Boostraps, B = 10, R outperforms Golang in terms of execution time, which changes when B approaches numbers larger than 50. R's execution speed exponenetially increases compared to Go for large numbers of B. One thing to note for these data points is that the observation is not taken from an average of multiple trials, so the true mean execution time may differ greatly.
+
+The implementation process of the Golang code for advanced statistics methods such as Bootstrap is not an easy task. While the Golang community has libraries, it is far behind R in terms of ease of writing a simple bootstrap task. For Go, several custom functions had to be written in order to manipulate the data and use the functions that was suitable for the task. We did not explore the usage of Gota (dataframes for Golang), which may have made the task much simpler. The true advantage of Golang comes from its testing capabilities. The idiomatic way of writing Go is to break down the code in to several reusable functions that can be unit tested. This also results in having to write 100+ lines of code that can be simply done in R for much less. We also did not compare the visual capabilities of Go, but R has Tidyverse which takes graphing capabilites of base R to the next level, while Go was built for command line software and should not be use for visualizations.
+
+Our recommendation will vary depending on the details of how the company currently uses R for its everyday tasks. Here are some questions that will be especially useful:
+
+1. Is R being used for building data pipelines for large datasets?
+2. How large are the datasets?
+3. How much will it cost to hire/train employees to use Golang?
+
+
+AWS EC2 (Amazon's IAAS virtual machine) offers pricing as below for an r6g instance:
+Use Case: Memory-intensive applications with a focus on cost-efficiency.
+Specifications: Up to 512 GiB of memory.
+Pricing Example (US East - N. Virginia):
+r6g.large (2 vCPUs, 16 GiB memory): ~$0.1008 per hour (On-Demand).
+r6g.2xlarge (8 vCPUs, 64 GiB memory): ~$0.4032 per hour (On-Demand).
+
+Cloud computing can get expensive very fast, and moving from R to Go may save cloud computing costs, depending on how much time the data scientists and engineers are willing to put into (and if they posses the technical abillity) to write more efficient code. While it takes much longer to write code in Golang than in R, for running processes with large datasets, it is possible to do software profiling in Golang to save costs on the cloud computing end.
